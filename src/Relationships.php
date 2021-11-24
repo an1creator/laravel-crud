@@ -23,6 +23,7 @@ class Relationships
     {
         $this->relationships = new Collection;
 
+        $relationNames = ['HasOne', 'HasMany', 'BelongsTo', 'BelongsToMany', 'MorphToMany', 'MorphTo'];
         foreach ((new ReflectionClass($this->model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             $returnType = $method->getReturnType();
 
