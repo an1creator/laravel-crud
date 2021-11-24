@@ -24,7 +24,9 @@ class Relationships
         $this->relationships = new Collection;
 
         foreach ((new ReflectionClass($this->model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-            if (!empty($method->getParameters())) {
+            $returnType = $method->getReturnType();
+
+            if (blank($returnType) || !in_array(class_basename($returnType->getName()), $relationNames)) {
                 continue;
             }
 
