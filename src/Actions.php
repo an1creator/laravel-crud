@@ -55,23 +55,7 @@ class Actions
 
     public function updateBelongsToMany($values): void
     {
-        $sync = [];
-        foreach ($values as $value) {
-            if (isset($value[$this->relationship->foreignKey])) {
-                $id = $value[$this->relationship->foreignKey];
-                $pivot = Arr::where(Arr::except($value, [$this->relationship->foreignKey]), function ($value, $key) {
-                    return in_array($key, $this->relationship->pivot);
-                });
-
-                if (!blank($pivot)) {
-                    $sync[$id] = $pivot;
-                } else {
-                    $sync[] = $id;
-                }
-            }
-        }
-
-        $this->model->{$this->relationship->name}()->sync($sync);
+        $this->model->{$this->relationship->name}()->sync($values);
     }
 
     public function createBelongsToMany($values): void
